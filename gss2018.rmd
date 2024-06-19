@@ -34,9 +34,10 @@ $H_A$: they are dependent to owns the gun.
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
 
-CAPPUN is a carigirical variable,
-OWNGUN is a carigorical variable, so I 
-use the cat-cat helper file 
+CAPPUN is a carigirical variable,  
+OWNGUN is a carigorical variable, so I   
+use the cat-cat helper file   
+We want CPPUN~OWNGUN  
 ##Results
 
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
@@ -76,7 +77,7 @@ chisqtestGC(table1)
 fisher.test(table1)
 ```
 
-The p-value for the Chi- squared test was p = 0.0202
+The p-value for the Chi- squared test was p = 0.02022
 the mean we reject /fail to reject the null hpothesis , and 
 Indepentent of gun ownership (OWNGUN) because its less than .05. 
 
@@ -90,16 +91,16 @@ the null hypothesis,as with chi-square test, and furthermore the odds ratio says
 Is there a difference in years of education (EDUC) between the those who did or did not vote in 2012 (VOTE12)?
 
 $H_0$: There is a difference in years in education between thoes who did and did not vote.   
-$H_A$: There is not a difference. 
+$H_A$: There is a difference. 
 
 
 ## Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
 
-The EDUC is a catergorical variable 
-The voting is a numerical variable 
-I used the numerical - cat.rmd file to pull the data. 
+The EDUC is a numerical variable   
+The voting is a categorical variable   
+I used the numerical - cat.rmd file to pull the data.   
 
 ##Results
 
@@ -111,7 +112,8 @@ I used the numerical - cat.rmd file to pull the data.
 ```{r}
 plot(EDUC~VOTE12,data=GSSdata)
 ```
- This shows 
+   This shows that more people who voted in 2012 tend to have more education.
+ 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 #### Numerical Descriptive Results
@@ -121,8 +123,7 @@ plot(EDUC~VOTE12,data=GSSdata)
 favstats(EDUC~VOTE12,data=GSSdata)
 ```
 
-This chart demonstrates that individuals that voted12 has a higher mean of a 15.72 and individuals  that voted no in 12 have a lower mean of 13.42.
-
+This chart demonstrates that individuals that voted12 has an average of 16 years of education and people who did not vote had 13 years of education.
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
@@ -141,10 +142,15 @@ I conclude that there is a difference in years of education between those who di
 <!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
 
 Determine if a persons performance on the wordsum test (WORDSUM) is independent of their level of schooling (DEGREE).
+$H_0$:The score of a persons wordsum test is independent of there level of schoolong. 
+$H_A$: They are dependent 
 
 ## Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
+wordsum is numerical variable   
+Degree is categorical variable    
+I used the NUM~CAT data file.   
 
 ##Results
 
@@ -154,13 +160,46 @@ Determine if a persons performance on the wordsum test (WORDSUM) is independent 
 
 #### Graphical Descriptive Results
 
+
+```{r}
+boxplot(WORDSUM~DEGREE,data=GSSdata)
+```
+This graph shows that there is a difference between the performance of a persons testing and the level of schooling. 
+
+
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 #### Numerical Descriptive Results
 
+```{r}
+favstats(WORDSUM~DEGREE,data=GSSdata)
+```
+The graph shows there is a difference between LT high school and gradates because LT High is at at 7 and graduate median is at 10. 
+
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 ### Inferential Results
+
+```{r}
+anova=aov(WORDSUM~DEGREE,data=GSSdata)
+summary(anova)
+```
+
+This shows that we reject the null because the p-value is 0.0000002 witch is smaller then .05
+
+
+```{r}
+#we specify the margins starting at the bottom and proceeding clockwise - thus 8.7 is the left side margin to hold the names of the factors
+par(mar = c(7, 8.7, 2, 2))
+plot(TukeyHSD(anova),las=2)
+```
+There is no difference bwteen high school and less than high  
+There is a difference and jr college and high schhol   
+There is a difference between bachelors and high school   
+There is a difference and gradutes and high school   
+There is no difference betwwen high school and gradute   
+No diffidence between jr college and grduate   
+No difference between and bachelors and gradute   
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
@@ -172,3 +211,9 @@ Determine if a persons performance on the wordsum test (WORDSUM) is independent 
 
 #### Question 1:is gun owerships independent of opinion on capital punishment. 
 The summary results and the inferential results show that they ae not independent.
+
+#### Question2: Is there a difference in years of education (EDUC) between the those who did or did not vote in 2012 (VOTE12)?
+In graphical results it shows that more people who voted in 2012 tend to have more education
+
+#### Question 3: Determine if a persons performance on the wordsum test (WORDSUM) is independent of their level of schooling (DEGREE).
+We determined in inferential results that there is a diffrence between the performance on the WORDSUM test report. 
